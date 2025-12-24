@@ -1,0 +1,124 @@
+[project]
+name = "vision-ai"
+version = "0.4.0"
+description = "工业质检缺陷检测 Vision 项目：分类/分割/异常检测/目标检测 + 视频流 + TensorRT + REST API"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Your Name", email = "your@email.com" }]
+keywords = ["computer-vision", "defect-detection", "deep-learning", "pytorch", "anomaly-detection", "segmentation", "yolo", "object-detection", "video-stream", "tensorrt", "fastapi"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+]
+
+dependencies = [
+    "torch>=2.2",
+    "torchvision>=0.17",
+    "numpy>=1.24",
+    "pillow>=10.0",
+    "matplotlib>=3.8",
+    "tqdm>=4.66",
+    "onnx>=1.15",
+    "tensorboard>=2.15",
+    "scikit-learn>=1.4",
+    "opencv-python>=4.9",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.4",
+    "mypy>=1.10",
+]
+onnx-simplify = [
+    "onnxsim>=0.4",
+]
+server = [
+    "fastapi>=0.111",
+    "uvicorn>=0.30",
+    "python-multipart>=0.0.9",
+]
+tensorrt = [
+    "tensorrt>=10.0",
+    "pycuda>=2024.1",
+]
+yolo = [
+    "ultralytics>=8.2",
+]
+all = [
+    "vision-ai[dev,onnx-simplify,server,tensorrt,yolo]",
+]
+
+[project.scripts]
+# 分类任务
+vision-train = "vision_ai.train:main"
+vision-infer = "vision_ai.infer:main"
+vision-predict = "vision_ai.predict_dir:main"
+vision-export = "vision_ai.export_onnx:main"
+
+# 数据生成
+vision-generate = "vision_ai.data.generate_synth_defects:main"
+vision-generate-multiclass = "vision_ai.data.generate_multiclass:main"
+vision-generate-seg = "vision_ai.data.generate_segmentation:main"
+
+# 分割任务
+vision-train-seg = "vision_ai.train_seg:main"
+vision-infer-seg = "vision_ai.infer_seg:main"
+
+# 异常检测
+vision-train-anomaly = "vision_ai.train_anomaly:main"
+vision-infer-anomaly = "vision_ai.infer_anomaly:main"
+
+# TensorRT
+vision-export-trt = "vision_ai.export_tensorrt:main"
+vision-infer-trt = "vision_ai.infer_tensorrt:main"
+
+# 视频流检测
+vision-video = "vision_ai.video_stream:main"
+vision-video-yolo = "vision_ai.video_yolo:main"
+
+# YOLO 目标检测
+vision-generate-det = "vision_ai.data.generate_detection:main"
+vision-train-yolo = "vision_ai.train_yolo:main"
+vision-infer-yolo = "vision_ai.infer_yolo:main"
+
+# 服务
+vision-server = "vision_ai.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["vision_ai"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B", "C4", "SIM"]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["vision_ai"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
