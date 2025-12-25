@@ -8,8 +8,8 @@ from typing import Dict, List, Optional, Tuple
 import numpy as np
 from PIL import Image
 
-from vision_ai.logger import get_logger, setup_logger
-from vision_ai.utils import ensure_dir
+from defectvision.logger import get_logger, setup_logger
+from defectvision.utils import ensure_dir
 
 
 class TensorRTInference:
@@ -26,7 +26,7 @@ class TensorRTInference:
                 "Install with: pip install tensorrt pycuda"
             )
 
-        self.logger = get_logger("vision_ai")
+        self.logger = get_logger("defectvision")
         self.logger.info(f"Loading TensorRT engine: {engine_path}")
 
         # 加载引擎
@@ -142,8 +142,8 @@ def main() -> None:
     parser.add_argument("--iterations", type=int, default=100, help="基准测试迭代次数")
     args = parser.parse_args()
 
-    setup_logger("vision_ai")
-    logger = get_logger("vision_ai")
+    setup_logger("defectvision")
+    logger = get_logger("defectvision")
 
     engine_path = Path(args.engine)
     if not engine_path.exists():

@@ -9,11 +9,11 @@ import numpy as np
 import torch
 from PIL import Image
 
-from vision_ai.datasets import build_transforms
-from vision_ai.gradcam import compute_gradcam, overlay_cam
-from vision_ai.logger import get_logger, setup_logger
-from vision_ai.model import build_model
-from vision_ai.utils import device_from_arg, load_ckpt
+from defectvision.datasets import build_transforms
+from defectvision.gradcam import compute_gradcam, overlay_cam
+from defectvision.logger import get_logger, setup_logger
+from defectvision.model import build_model
+from defectvision.utils import device_from_arg, load_ckpt
 
 
 class InferenceEngine:
@@ -24,7 +24,7 @@ class InferenceEngine:
         ckpt_path: Path,
         device: str = "auto",
     ):
-        self.logger = get_logger("vision_ai")
+        self.logger = get_logger("defectvision")
         self.device = device_from_arg(device)
         self.logger.info(f"Loading model from: {ckpt_path}")
         self.logger.info(f"Using device: {self.device}")
@@ -120,7 +120,7 @@ def get_engine() -> InferenceEngine:
 def init_engine(ckpt_path: str, device: str = "auto") -> None:
     """初始化推理引擎"""
     global _engine
-    setup_logger("vision_ai")
+    setup_logger("defectvision")
     _engine = InferenceEngine(Path(ckpt_path), device)
 
 

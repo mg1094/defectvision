@@ -15,7 +15,7 @@ WORKDIR /app
 
 # 仅复制安装所需文件，减少构建层体积
 COPY pyproject.toml README.md ./
-COPY vision_ai ./vision_ai
+COPY defectvision ./defectvision
 
 # 安装项目（包含 FastAPI + YOLO 依赖）
 RUN pip install --no-cache-dir --upgrade pip \
@@ -24,6 +24,6 @@ RUN pip install --no-cache-dir --upgrade pip \
 EXPOSE 8000
 
 # 默认启动 REST API 服务，挂载权重到 /weights
-ENTRYPOINT ["vision-server"]
+ENTRYPOINT ["defect-server"]
 CMD ["--ckpt", "/weights/best.pt", "--host", "0.0.0.0", "--port", "8000"]
 

@@ -9,10 +9,10 @@ import cv2
 import numpy as np
 import torch
 
-from vision_ai.datasets import build_transforms
-from vision_ai.logger import get_logger, setup_logger
-from vision_ai.model import build_model
-from vision_ai.utils import device_from_arg, load_ckpt
+from defectvision.datasets import build_transforms
+from defectvision.logger import get_logger, setup_logger
+from defectvision.model import build_model
+from defectvision.utils import device_from_arg, load_ckpt
 
 
 class VideoDetector:
@@ -24,7 +24,7 @@ class VideoDetector:
         device: str = "auto",
         threshold: float = 0.5,
     ):
-        self.logger = get_logger("vision_ai")
+        self.logger = get_logger("defectvision")
         self.device = device_from_arg(device)
         self.threshold = threshold
 
@@ -180,7 +180,7 @@ def run_video_detection(
         show: 是否显示窗口
         max_fps: 最大处理帧率
     """
-    logger = get_logger("vision_ai")
+    logger = get_logger("defectvision")
 
     # 打开视频源
     if source.isdigit():
@@ -293,8 +293,8 @@ def main() -> None:
     parser.add_argument("--max-fps", type=float, default=30.0, help="最大处理帧率")
     args = parser.parse_args()
 
-    setup_logger("vision_ai")
-    logger = get_logger("vision_ai")
+    setup_logger("defectvision")
+    logger = get_logger("defectvision")
 
     # 创建检测器
     detector = VideoDetector(

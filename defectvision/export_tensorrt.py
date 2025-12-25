@@ -3,8 +3,8 @@
 import argparse
 from pathlib import Path
 
-from vision_ai.logger import get_logger, setup_logger
-from vision_ai.utils import ensure_dir
+from defectvision.logger import get_logger, setup_logger
+from defectvision.utils import ensure_dir
 
 
 def export_tensorrt(
@@ -35,7 +35,7 @@ def export_tensorrt(
             "Or for CUDA 12: pip install tensorrt --extra-index-url https://pypi.nvidia.com"
         )
 
-    logger = get_logger("vision_ai")
+    logger = get_logger("defectvision")
 
     TRT_LOGGER = trt.Logger(trt.Logger.WARNING)
 
@@ -107,8 +107,8 @@ def main() -> None:
     parser.add_argument("--workspace", type=float, default=4.0, help="GPU 工作空间大小 (GB)")
     args = parser.parse_args()
 
-    setup_logger("vision_ai")
-    logger = get_logger("vision_ai")
+    setup_logger("defectvision")
+    logger = get_logger("defectvision")
 
     onnx_path = Path(args.onnx)
     if not onnx_path.exists():

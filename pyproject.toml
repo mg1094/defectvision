@@ -1,5 +1,5 @@
 [project]
-name = "vision-ai"
+name = "defectvision"
 version = "0.4.0"
 description = "工业质检缺陷检测 Vision 项目：分类/分割/异常检测/目标检测 + 视频流 + TensorRT + REST API"
 readme = "README.md"
@@ -55,51 +55,51 @@ yolo = [
     "ultralytics>=8.2",
 ]
 all = [
-    "vision-ai[dev,onnx-simplify,server,tensorrt,yolo]",
+    "defectvision[dev,onnx-simplify,server,tensorrt,yolo]",
 ]
 
 [project.scripts]
 # 分类任务
-vision-train = "vision_ai.train:main"
-vision-infer = "vision_ai.infer:main"
-vision-predict = "vision_ai.predict_dir:main"
-vision-export = "vision_ai.export_onnx:main"
+defect-train = "defectvision.train:main"
+defect-infer = "defectvision.infer:main"
+defect-predict = "defectvision.predict_dir:main"
+defect-export = "defectvision.export_onnx:main"
 
 # 数据生成
-vision-generate = "vision_ai.data.generate_synth_defects:main"
-vision-generate-multiclass = "vision_ai.data.generate_multiclass:main"
-vision-generate-seg = "vision_ai.data.generate_segmentation:main"
+defect-generate = "defectvision.data.generate_synth_defects:main"
+defect-generate-multiclass = "defectvision.data.generate_multiclass:main"
+defect-generate-seg = "defectvision.data.generate_segmentation:main"
 
 # 分割任务
-vision-train-seg = "vision_ai.train_seg:main"
-vision-infer-seg = "vision_ai.infer_seg:main"
+defect-train-seg = "defectvision.train_seg:main"
+defect-infer-seg = "defectvision.infer_seg:main"
 
 # 异常检测
-vision-train-anomaly = "vision_ai.train_anomaly:main"
-vision-infer-anomaly = "vision_ai.infer_anomaly:main"
+defect-train-anomaly = "defectvision.train_anomaly:main"
+defect-infer-anomaly = "defectvision.infer_anomaly:main"
 
 # TensorRT
-vision-export-trt = "vision_ai.export_tensorrt:main"
-vision-infer-trt = "vision_ai.infer_tensorrt:main"
+defect-export-trt = "defectvision.export_tensorrt:main"
+defect-infer-trt = "defectvision.infer_tensorrt:main"
 
 # 视频流检测
-vision-video = "vision_ai.video_stream:main"
-vision-video-yolo = "vision_ai.video_yolo:main"
+defect-video = "defectvision.video_stream:main"
+defect-video-yolo = "defectvision.video_yolo:main"
 
 # YOLO 目标检测
-vision-generate-det = "vision_ai.data.generate_detection:main"
-vision-train-yolo = "vision_ai.train_yolo:main"
-vision-infer-yolo = "vision_ai.infer_yolo:main"
+defect-generate-det = "defectvision.data.generate_detection:main"
+defect-train-yolo = "defectvision.train_yolo:main"
+defect-infer-yolo = "defectvision.infer_yolo:main"
 
 # 服务
-vision-server = "vision_ai.server:main"
+defect-server = "defectvision.server:main"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["vision_ai"]
+packages = ["defectvision"]
 
 [tool.ruff]
 line-length = 120
@@ -110,7 +110,7 @@ select = ["E", "F", "I", "W", "UP", "B", "C4", "SIM"]
 ignore = ["E501"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["vision_ai"]
+known-first-party = ["defectvision"]
 
 [tool.mypy]
 python_version = "3.10"

@@ -9,7 +9,7 @@ import torch
 import torch.nn.functional as F
 from PIL import Image
 
-from vision_ai.datasets import build_transforms
+from defectvision.datasets import build_transforms
 
 
 def prepare_image(path: Path, image_size: int) -> Tuple[torch.Tensor, Image.Image]:

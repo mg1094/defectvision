@@ -9,8 +9,8 @@ from typing import Dict, Iterable, List, Optional
 import cv2
 import numpy as np
 
-from vision_ai.logger import get_logger, setup_logger
-from vision_ai.utils import ensure_dir
+from defectvision.logger import get_logger, setup_logger
+from defectvision.utils import ensure_dir
 
 IMG_EXTS = {".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff", ".webp"}
 
@@ -82,7 +82,7 @@ class YOLODetector:
         except ImportError:
             raise ImportError("ultralytics not installed. Install with: pip install ultralytics")
 
-        self.logger = get_logger("vision_ai")
+        self.logger = get_logger("defectvision")
         self.logger.info(f"Loading YOLO model: {model_path}")
 
         self.model = YOLO(str(model_path))
@@ -160,8 +160,8 @@ def main() -> None:
     parser.add_argument("--show", action="store_true", help="显示结果窗口")
     args = parser.parse_args()
 
-    setup_logger("vision_ai")
-    logger = get_logger("vision_ai")
+    setup_logger("defectvision")
+    logger = get_logger("defectvision")
 
     # 加载模型
     detector = YOLODetector(

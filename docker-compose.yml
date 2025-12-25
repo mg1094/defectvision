@@ -1,9 +1,9 @@
 services:
-  vision-ai:
+  defectvision:
     build:
       context: .
       dockerfile: Dockerfile
-    image: vision-ai:latest
+    image: defectvision:latest
     ports:
       - "8000:8000"
     volumes:

@@ -233,7 +233,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    # 让 `python vision_ai/data/generate_synth_defects.py ...` 也能跑
+    # 让 `python defectvision/data/generate_synth_defects.py ...` 也能跑
     os.environ.setdefault("PYTHONUTF8", "1")
     main()
 

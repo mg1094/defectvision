@@ -12,10 +12,10 @@ from torch.cuda.amp import GradScaler, autocast
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 
-from vision_ai.datasets import DataConfig, build_dataloaders
-from vision_ai.logger import setup_logger
-from vision_ai.model import build_model
-from vision_ai.utils import ensure_dir, get_device_info, save_ckpt, save_json
+from defectvision.datasets import DataConfig, build_dataloaders
+from defectvision.logger import setup_logger
+from defectvision.model import build_model
+from defectvision.utils import ensure_dir, get_device_info, save_ckpt, save_json
 
 
 @dataclass
@@ -208,7 +208,7 @@ def main() -> None:
     # 设置输出目录和日志
     out_dir = Path(args.out)
     ensure_dir(out_dir)
-    logger = setup_logger("vision_ai", log_file=out_dir / "train.log")
+    logger = setup_logger("defectvision", log_file=out_dir / "train.log")
 
     logger.info(f"Device info: {get_device_info()}")
 
@@ -216,7 +216,7 @@ def main() -> None:
     torch.manual_seed(int(args.seed))
 
     # 设备配置
-    from vision_ai.utils import device_from_arg
+    from defectvision.utils import device_from_arg
 
     device = device_from_arg(args.device)
     logger.info(f"Using device: {device}")

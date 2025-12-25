@@ -7,7 +7,7 @@ from typing import Optional
 
 
 def setup_logger(
-    name: str = "vision_ai",
+    name: str = "defectvision",
     level: int = logging.INFO,
     log_file: Optional[Path] = None,
 ) -> logging.Logger:
@@ -51,7 +51,7 @@ def setup_logger(
     return logger
 
 
-def get_logger(name: str = "vision_ai") -> logging.Logger:
+def get_logger(name: str = "defectvision") -> logging.Logger:
     """获取已配置的日志器"""
     return logging.getLogger(name)
 

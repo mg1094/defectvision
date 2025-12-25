@@ -9,9 +9,9 @@ import torch.nn.functional as F
 from PIL import Image
 from torchvision import transforms
 
-from vision_ai.logger import get_logger, setup_logger
-from vision_ai.models.autoencoder import build_anomaly_model
-from vision_ai.utils import device_from_arg, ensure_dir, load_ckpt
+from defectvision.logger import get_logger, setup_logger
+from defectvision.models.autoencoder import build_anomaly_model
+from defectvision.utils import device_from_arg, ensure_dir, load_ckpt
 
 
 def _prepare_image(path: Path, image_size: int) -> tuple:
@@ -76,8 +76,8 @@ def main() -> None:
     parser.add_argument("--device", type=str, default="auto", choices=["cpu", "cuda", "mps", "auto"])
     args = parser.parse_args()
 
-    setup_logger("vision_ai")
-    logger = get_logger("vision_ai")
+    setup_logger("defectvision")
+    logger = get_logger("defectvision")
 
     device = device_from_arg(args.device)
     logger.info(f"Using device: {device}")

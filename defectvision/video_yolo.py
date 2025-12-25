@@ -8,9 +8,9 @@ from typing import Optional
 import cv2
 import numpy as np
 
-from vision_ai.infer_yolo import COLORS, YOLODetector, draw_detections
-from vision_ai.logger import get_logger, setup_logger
-from vision_ai.utils import ensure_dir
+from defectvision.infer_yolo import COLORS, YOLODetector, draw_detections
+from defectvision.logger import get_logger, setup_logger
+from defectvision.utils import ensure_dir
 
 
 def run_video_detection(
@@ -30,7 +30,7 @@ def run_video_detection(
         show: 是否显示窗口
         max_fps: 最大处理帧率
     """
-    logger = get_logger("vision_ai")
+    logger = get_logger("defectvision")
 
     # 打开视频源
     if source.isdigit():
@@ -164,8 +164,8 @@ def main() -> None:
     parser.add_argument("--max-fps", type=float, default=30.0, help="最大帧率")
     args = parser.parse_args()
 
-    setup_logger("vision_ai")
-    logger = get_logger("vision_ai")
+    setup_logger("defectvision")
+    logger = get_logger("defectvision")
 
     # 创建检测器
     detector = YOLODetector(

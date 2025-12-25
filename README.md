@@ -1,4 +1,4 @@
-# vision_ai
+# defectvision
 
 工业质检缺陷检测 Vision 项目，支持：
 
@@ -45,39 +45,39 @@ uv sync --extra all
 
 ```bash
 # 生成数据
-uv run vision-generate --out ./datasets/binary
+uv run defect-generate --out ./datasets/binary
 
 # 训练
-uv run vision-train --data ./datasets/binary --out ./runs/cls --backbone resnet18 --epochs 20
+uv run defect-train --data ./datasets/binary --out ./runs/cls --backbone resnet18 --epochs 20
 
 # 推理
-uv run vision-infer --ckpt ./runs/cls/best.pt --image ./test.png --out ./result.png
+uv run defect-infer --ckpt ./runs/cls/best.pt --image ./test.png --out ./result.png
 ```
 
 ## 2️⃣ 分割模式
 
 ```bash
 # 生成数据
-uv run vision-generate-seg --out ./datasets/seg
+uv run defect-generate-seg --out ./datasets/seg
 
 # 训练 U-Net
-uv run vision-train-seg --data ./datasets/seg --out ./runs/seg --epochs 50
+uv run defect-train-seg --data ./datasets/seg --out ./runs/seg --epochs 50
 
 # 推理
-uv run vision-infer-seg --ckpt ./runs/seg/best.pt --image ./test.png --out ./result.png
+uv run defect-infer-seg --ckpt ./runs/seg/best.pt --image ./test.png --out ./result.png
 ```
 
 ## 3️⃣ 异常检测
 
 ```bash
 # 生成数据
-uv run vision-generate --out ./datasets/anomaly --ok-ratio 0.5
+uv run defect-generate --out ./datasets/anomaly --ok-ratio 0.5
 
 # 训练 VAE（只用 OK 样本）
-uv run vision-train-anomaly --data ./datasets/anomaly --out ./runs/anomaly --model vae
+uv run defect-train-anomaly --data ./datasets/anomaly --out ./runs/anomaly --model vae
 
 # 推理
-uv run vision-infer-anomaly --ckpt ./runs/anomaly/best.pt --image ./test.png --out ./result.png
+uv run defect-infer-anomaly --ckpt ./runs/anomaly/best.pt --image ./test.png --out ./result.png
 ```
 
 ## 4️⃣ YOLO 目标检测
@@ -86,16 +86,16 @@ YOLO 可以同时检测多个缺陷并标注位置，适合复杂场景。
 
 ```bash
 # 生成数据（YOLO 格式：图像 + txt 标注）
-uv run vision-generate-det --out ./datasets/det --train 1000 --val 200 --test 200
+uv run defect-generate-det --out ./datasets/det --train 1000 --val 200 --test 200
 
 # 训练 YOLOv8
-uv run vision-train-yolo --data ./datasets/det/data.yaml --out ./runs/yolo --epochs 100
+uv run defect-train-yolo --data ./datasets/det/data.yaml --out ./runs/yolo --epochs 100
 
 # 图片推理
-uv run vision-infer-yolo --model ./runs/yolo/train/weights/best.pt --source ./test.png --out ./results/
+uv run defect-infer-yolo --model ./runs/yolo/train/weights/best.pt --source ./test.png --out ./results/
 
 # 目录批量推理
-uv run vision-infer-yolo --model ./runs/yolo/train/weights/best.pt --source ./datasets/det/test/images --out ./results/ --save-csv
+uv run defect-infer-yolo --model ./runs/yolo/train/weights/best.pt --source ./datasets/det/test/images --out ./results/ --save-csv
 ```
 
 ### YOLO 模型选择
@@ -117,26 +117,26 @@ uv run vision-infer-yolo --model ./runs/yolo/train/weights/best.pt --source ./da
 
 ```bash
 # 摄像头实时检测
-uv run vision-video --ckpt ./runs/cls/best.pt --source 0
+uv run defect-video --ckpt ./runs/cls/best.pt --source 0
 
 # RTSP 流检测
-uv run vision-video --ckpt ./runs/cls/best.pt --source "rtsp://192.168.1.100:554/stream"
+uv run defect-video --ckpt ./runs/cls/best.pt --source "rtsp://192.168.1.100:554/stream"
 
 # 视频文件检测
-uv run vision-video --ckpt ./runs/cls/best.pt --source ./video.mp4 --output ./result.mp4
+uv run defect-video --ckpt ./runs/cls/best.pt --source ./video.mp4 --output ./result.mp4
 ```
 
 ### YOLO 视频流检测
 
 ```bash
 # 摄像头实时目标检测
-uv run vision-video-yolo --model ./runs/yolo/train/weights/best.pt --source 0
+uv run defect-video-yolo --model ./runs/yolo/train/weights/best.pt --source 0
 
 # RTSP 流目标检测
-uv run vision-video-yolo --model ./runs/yolo/train/weights/best.pt --source "rtsp://ip:port/stream"
+uv run defect-video-yolo --model ./runs/yolo/train/weights/best.pt --source "rtsp://ip:port/stream"
 
 # 视频文件目标检测
-uv run vision-video-yolo --model ./runs/yolo/train/weights/best.pt --source ./video.mp4 --output ./result.mp4
+uv run defect-video-yolo --model ./runs/yolo/train/weights/best.pt --source ./video.mp4 --output ./result.mp4
 ```
 
 ### 视频流参数
@@ -162,19 +162,19 @@ TensorRT 可将推理速度提升 **5-10 倍**，适合生产环境部署。
 
 ```bash
 # 1. 导出 ONNX
-uv run vision-export --ckpt ./runs/cls/best.pt --out ./runs/cls/model.onnx --dynamic-batch
+uv run defect-export --ckpt ./runs/cls/best.pt --out ./runs/cls/model.onnx --dynamic-batch
 
 # 2. 转换为 TensorRT（需要 NVIDIA GPU）
-uv run vision-export-trt --onnx ./runs/cls/model.onnx --out ./runs/cls/model.engine --fp16
+uv run defect-export-trt --onnx ./runs/cls/model.onnx --out ./runs/cls/model.engine --fp16
 
 # 3. TensorRT 推理
-uv run vision-infer-trt --engine ./runs/cls/model.engine --image ./test.png --classes ok,ng
+uv run defect-infer-trt --engine ./runs/cls/model.engine --image ./test.png --classes ok,ng
 ```
 
 ### 性能基准测试
 
 ```bash
-uv run vision-infer-trt --engine ./model.engine --image ./test.png --benchmark --iterations 1000
+uv run defect-infer-trt --engine ./model.engine --image ./test.png --benchmark --iterations 1000
 ```
 
 ### TensorRT 参数
@@ -195,7 +195,7 @@ uv run vision-infer-trt --engine ./model.engine --image ./test.png --benchmark -
 ### 启动服务
 
 ```bash
-uv run vision-server --ckpt ./runs/cls/best.pt --port 8000
+uv run defect-server --ckpt ./runs/cls/best.pt --port 8000
 ```
 
 ### 访问
@@ -267,7 +267,7 @@ curl http://localhost:8000/info
 1) 构建镜像：
 
 ```bash
-docker build -t vision-ai:latest .
+docker build -t defectvision:latest .
 ```
 
 2) 准备权重（示例：把分类模型权重放到 `./weights/best.pt`）：
@@ -282,7 +282,7 @@ cp ./runs/cls/best.pt ./weights/best.pt
 ```bash
 docker run --rm -p 8000:8000 \
   -v "$(pwd)/weights:/weights:ro" \
-  vision-ai:latest
+  defectvision:latest
 ```
 
 访问：
@@ -316,7 +316,7 @@ docker compose up --build
 ## 📁 项目结构
 
 ```
-vision_ai/
+defectvision/
 ├── model.py              # 分类模型
 ├── models/
 │   ├── unet.py           # 分割模型
@@ -350,31 +350,31 @@ vision_ai/
 | 命令 | 说明 |
 |------|------|
 | **数据生成** | |
-| `vision-generate` | OK/NG 二分类数据 |
-| `vision-generate-multiclass` | 多类缺陷数据 |
-| `vision-generate-seg` | 分割数据（图像 + mask） |
-| `vision-generate-det` | YOLO 目标检测数据 |
+| `defect-generate` | OK/NG 二分类数据 |
+| `defect-generate-multiclass` | 多类缺陷数据 |
+| `defect-generate-seg` | 分割数据（图像 + mask） |
+| `defect-generate-det` | YOLO 目标检测数据 |
 | **分类** | |
-| `vision-train` | 分类训练 |
-| `vision-infer` | 单图推理 + Grad-CAM |
-| `vision-predict` | 批量推理 |
+| `defect-train` | 分类训练 |
+| `defect-infer` | 单图推理 + Grad-CAM |
+| `defect-predict` | 批量推理 |
 | **分割** | |
-| `vision-train-seg` | U-Net 训练 |
-| `vision-infer-seg` | 分割推理 |
+| `defect-train-seg` | U-Net 训练 |
+| `defect-infer-seg` | 分割推理 |
 | **异常检测** | |
-| `vision-train-anomaly` | VAE/AE 训练 |
-| `vision-infer-anomaly` | 异常检测推理 |
+| `defect-train-anomaly` | VAE/AE 训练 |
+| `defect-infer-anomaly` | 异常检测推理 |
 | **YOLO 目标检测** | |
-| `vision-train-yolo` | YOLO 训练 |
-| `vision-infer-yolo` | YOLO 推理 |
+| `defect-train-yolo` | YOLO 训练 |
+| `defect-infer-yolo` | YOLO 推理 |
 | **视频流** | |
-| `vision-video` | 分类视频流检测 |
-| `vision-video-yolo` | YOLO 视频流检测 |
+| `defect-video` | 分类视频流检测 |
+| `defect-video-yolo` | YOLO 视频流检测 |
 | **部署** | |
-| `vision-export` | ONNX 导出 |
-| `vision-export-trt` | TensorRT 导出 |
-| `vision-infer-trt` | TensorRT 推理 |
-| `vision-server` | 启动 REST API 服务 |
+| `defect-export` | ONNX 导出 |
+| `defect-export-trt` | TensorRT 导出 |
+| `defect-infer-trt` | TensorRT 推理 |
+| `defect-server` | 启动 REST API 服务 |
 
 ## 📊 模式选择指南
 

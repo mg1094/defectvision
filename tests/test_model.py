@@ -3,7 +3,7 @@
 import pytest
 import torch
 
-from vision_ai.model import build_model
+from defectvision.model import build_model
 
 
 class TestBuildModel:

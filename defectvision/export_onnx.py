@@ -5,9 +5,9 @@ from pathlib import Path
 
 import torch
 
-from vision_ai.logger import get_logger, setup_logger
-from vision_ai.model import build_model
-from vision_ai.utils import device_from_arg, ensure_dir, load_ckpt
+from defectvision.logger import get_logger, setup_logger
+from defectvision.model import build_model
+from defectvision.utils import device_from_arg, ensure_dir, load_ckpt
 
 
 def main() -> None:
@@ -20,8 +20,8 @@ def main() -> None:
     parser.add_argument("--simplify", action="store_true", help="使用 onnx-simplifier 简化模型")
     args = parser.parse_args()
 
-    setup_logger("vision_ai")
-    logger = get_logger("vision_ai")
+    setup_logger("defectvision")
+    logger = get_logger("defectvision")
 
     # 加载模型
     device = device_from_arg(args.device)

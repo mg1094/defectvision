@@ -3,8 +3,8 @@
 import argparse
 from pathlib import Path
 
-from vision_ai.logger import get_logger, setup_logger
-from vision_ai.utils import ensure_dir
+from defectvision.logger import get_logger, setup_logger
+from defectvision.utils import ensure_dir
 
 
 def main() -> None:
@@ -21,8 +21,8 @@ def main() -> None:
     parser.add_argument("--resume", action="store_true", help="从上次中断处继续训练")
     args = parser.parse_args()
 
-    setup_logger("vision_ai")
-    logger = get_logger("vision_ai")
+    setup_logger("defectvision")
+    logger = get_logger("defectvision")
 
     try:
         from ultralytics import YOLO

@@ -1,2 +1,2 @@
-# Tests for vision_ai
+# Tests for defectvision
 

@@ -12,10 +12,10 @@ from torch.cuda.amp import GradScaler, autocast
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 
-from vision_ai.datasets_seg import SegDataConfig, build_seg_dataloaders
-from vision_ai.logger import setup_logger
-from vision_ai.models.unet import build_unet
-from vision_ai.utils import device_from_arg, ensure_dir, get_device_info, save_ckpt, save_json
+from defectvision.datasets_seg import SegDataConfig, build_seg_dataloaders
+from defectvision.logger import setup_logger
+from defectvision.models.unet import build_unet
+from defectvision.utils import device_from_arg, ensure_dir, get_device_info, save_ckpt, save_json
 
 
 class DiceLoss(nn.Module):
@@ -192,7 +192,7 @@ def main() -> None:
 
     out_dir = Path(args.out)
     ensure_dir(out_dir)
-    logger = setup_logger("vision_ai", log_file=out_dir / "train_seg.log")
+    logger = setup_logger("defectvision", log_file=out_dir / "train_seg.log")
 
     logger.info(f"Device info: {get_device_info()}")
 
